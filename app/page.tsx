@@ -9,7 +9,9 @@ export default function Home() {
         </h1>
       </header>
       <main>
-        <Hive />
+        <div className="max-w-[290px]">
+          <Hive letters={["a", "b", "c", "d", "e", "f", "h"]} />
+        </div>
       </main>
     </div>
   )
