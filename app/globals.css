@@ -40,6 +40,10 @@
   --sb-dark-yellow: #847306;
 }
 
+@theme {
+  --breakpoint-xs: 24rem;
+}
+
 @theme inline {
   --font-sans: var(--font-libre-franklin-sans);
   --font-serif: var(--font-roboto-slab-serif);
