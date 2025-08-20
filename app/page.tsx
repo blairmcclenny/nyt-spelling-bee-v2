@@ -2,7 +2,7 @@ import Hive from "@/app/components/Hive"
 
 export default function Home() {
   return (
-    <div>
+    <>
       <header>
         <h1>
           Spelling Bee <span>August 17, 2025</span>
@@ -13,6 +13,6 @@ export default function Home() {
           <Hive letters={["a", "b", "c", "d", "e", "f", "h"]} />
         </div>
       </main>
-    </div>
+    </>
   )
 }
