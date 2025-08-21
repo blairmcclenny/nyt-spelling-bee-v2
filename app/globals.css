@@ -48,6 +48,12 @@
   --font-sans: var(--font-libre-franklin-sans);
   --font-serif: var(--font-roboto-slab-serif);
 
+  --spacing-small-device-max-height: calc(var(--vh, 1vh) * 68);
+  --spacing-small-device-height: calc(var(--vh, 1vh) * 68);
+  --spacing-large-device-height: calc(var(--vh, 1vh) * 75);
+  --spacing-large-device-max-height: calc(var(--vh, 1vh) * 75);
+  --spacing-desktop-height: calc(var(--vh, 1vh) * 64);
+
   --color-text: var(--dark-black);
   --color-text-subdued: var(--darkest-gray);
   --color-text-secondary: var(--darker-gray);
