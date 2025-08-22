@@ -1,4 +1,5 @@
 import Hive from "@/app/components/Hive"
+import HiveActions from "@/app/components/HiveActions"
 
 export default function Controls() {
   return (
@@ -7,7 +8,7 @@ export default function Controls() {
         <div className="sb-message-box" />
         <div className="sb-hive-input" />
         <Hive letters={["a", "b", "c", "d", "e", "f", "g"]} />
-        <div className="hive-actions" />
+        <HiveActions />
       </div>
     </div>
   )
