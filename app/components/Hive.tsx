@@ -20,7 +20,7 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
       viewBox="0 0 120 103.92304845413263"
     >
       <polygon
-        className="cursor-pointer stroke-bg-page transition-all duration-100 active:scale-[0.86] active:origin-center"
+        className="cursor-pointer stroke-bg-page transition-all duration-100 active:scale-[0.86] origin-center"
         points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263"
         strokeWidth={7.5}
       />
