@@ -1,35 +1,3 @@
-// $altitude-ratio: 1.73205080757; // sqrt(3)
-// $totalWidth: 290px;
-// $hive-padding-ratio: ((3 * $altitude-ratio) * 0.2) * 100%;
-// $shuffleTransitionTime: 0.3s; // This should match shuffleTransitionTime in Hive.js
-
-// .hive {
-
-//   &.shuffling {
-//     .outer > .cell-letter {
-//       opacity: 0;
-//     }
-//   }
-
-//   &.fade-out {
-//     .outer > .cell-letter {
-//       opacity: 0;
-//       transition: opacity $shuffleTransitionTime;
-//     }
-//   }
-
-//   &.fade-in {
-//     .outer > .cell-letter {
-//       opacity: 1;
-//       transition: opacity $shuffleTransitionTime;
-//     }
-//   }
-
-//   &.revealed {
-//     opacity: 0.5;
-//   }
-// }
-
 function HiveCell({ position, letter }: { position: number; letter: string }) {
   const hexCoords = [
     [0, 0],
