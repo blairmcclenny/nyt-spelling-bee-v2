@@ -36,11 +36,7 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
   )
 }
 
-export default function Hive({
-  letters = ["a", "b", "c", "d", "e", "f", "h"],
-}: {
-  letters: string[]
-}) {
+export default function Hive({ letters }: { letters: string[] }) {
   return (
     <div className="w-[70%] my-[4vh] xs:w-[90%] mx-auto xs:my-[calc(--spacing(5)*1.25)] select-none">
       <div className="relative w-full pb-[calc((3*1.73205080757*0.2)*100%)]">
