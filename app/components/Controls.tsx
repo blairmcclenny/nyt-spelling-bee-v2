@@ -1,6 +1,6 @@
 "use client"
 
-import { useGame } from "@/app/GameContext"
+import { useGame } from "@/app/contexts/GameContext"
 import MessageBox from "@/app/components/MessageBox"
 import HiveInput from "@/app/components/HiveInput"
 import Hive from "@/app/components/Hive"
