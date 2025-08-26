@@ -1,15 +1,20 @@
+"use client"
+
+import { useGame } from "@/app/contexts/GameContext"
 import MessageBox from "@/app/components/MessageBox"
 import HiveInput from "@/app/components/HiveInput"
 import Hive from "@/app/components/Hive"
 import HiveActions from "@/app/components/HiveActions"
 
 export default function Controls() {
+  const { letters } = useGame()
+
   return (
     <div className="flex flex-1 relative justify-center items-center">
       <div className="sb-controls relative max-h-full flex flex-col w-[80vw] max-w-[290px] z-[3] items-center pb-[calc(--spacing(1)*2.5)] xs:pb-[calc(--spacing(5)*2.25)]">
         <MessageBox message="Nice!" type="success" points={7} />
         <HiveInput input="guess" />
-        <Hive letters={["a", "b", "c", "d", "e", "f", "g"]} />
+        <Hive letters={letters} />
         <HiveActions />
       </div>
     </div>

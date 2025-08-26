@@ -19,10 +19,10 @@
 //   }
 // }
 
-function getRandomStatus() {
-  const statuses = ["text-inherit", "text-stroke-tertiary", "text-bg-sb"]
-  return statuses[Math.floor(Math.random() * statuses.length)]
-}
+// function getRandomStatus() {
+//   const statuses = ["text-inherit", "text-stroke-tertiary", "text-bg-sb"]
+//   return statuses[Math.floor(Math.random() * statuses.length)]
+// }
 
 export default function HiveInput({ input }: { input: string }) {
   return (
@@ -32,7 +32,7 @@ export default function HiveInput({ input }: { input: string }) {
           Type or click
         </span> */}
         {[...input].map((letter: string, i: number) => (
-          <span key={`${letter}${i}`} className={getRandomStatus()}>
+          <span key={`${letter}${i}`} className="text-inherit">
             {letter}
           </span>
         ))}
