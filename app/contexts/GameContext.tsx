@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext } from "react"
+import { dictionary } from "@/app/data/dictionary"
 
 const GameContext = createContext<{
   letters: string[]
@@ -18,8 +19,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   return (
     <GameContext
       value={{
-        letters: ["a", "b", "c", "d", "e", "f", "g"],
-        validWords: {},
+        letters: ["d", "e", "f", "i", "u", "h", "m"],
+        validWords: dictionary,
         foundWords: [],
         score: 0,
       }}
