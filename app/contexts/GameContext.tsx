@@ -14,8 +14,8 @@ const GameContext = createContext<{
   message: string | null
 }>({
   centerLetter: "",
-  validLetters: [],
   outerLetters: [],
+  validLetters: [],
   pangrams: [],
   answers: [],
   input: [],
@@ -24,7 +24,7 @@ const GameContext = createContext<{
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
-  const currentGame = games[0]
+  const currentGame = games[0] // TODO: implement game selection logic (randomize)
 
   return (
     <GameContext
