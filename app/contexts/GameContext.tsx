@@ -1,28 +1,117 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { dictionary } from "@/app/data/dictionary"
+import { games } from "@/app/data/mock"
+
+// {
+//   "centerLetter": "l",
+//   "outerLetters": [
+//     "v",
+//     "a",
+//     "y",
+//     "d",
+//     "i",
+//     "n"
+//   ],
+//   "validLetters": [
+//     "l",
+//     "a",
+//     "d",
+//     "i",
+//     "n",
+//     "v",
+//     "y"
+//   ],
+//   "pangrams": [
+//     "invalidly"
+//   ],
+//   "answers": [
+//     "invalidly",
+//     "allay",
+//     "ally",
+//     "anal",
+//     "anally",
+//     "annal",
+//     "anvil",
+//     "avail",
+//     "avidly",
+//     "daily",
+//     "dally",
+//     "dandily",
+//     "daylily",
+//     "dial",
+//     "diddly",
+//     "dill",
+//     "dilly",
+//     "dillydally",
+//     "idly",
+//     "idyl",
+//     "idyll",
+//     "illy",
+//     "inlaid",
+//     "inland",
+//     "inlay",
+//     "invalid",
+//     "lady",
+//     "laid",
+//     "lain",
+//     "lanai",
+//     "land",
+//     "landlady",
+//     "lava",
+//     "lily",
+//     "livid",
+//     "lividly",
+//     "nail",
+//     "naval",
+//     "vainly",
+//     "valid",
+//     "validly",
+//     "vandal",
+//     "vanilla",
+//     "vanillin",
+//     "vial",
+//     "villa",
+//     "villain",
+//     "villainy",
+//     "vinyl",
+//     "vividly"
+//   ],
+//   "input": ["k","j","h","k","j","h"],
+//   "foundWords": [
+//     "invalid"
+//   ],
+//   "message": null,
+// }
 
 const GameContext = createContext<{
-  letters: string[]
-  validWords: Record<string, boolean>
+  centerLetter: string
+  validLetters: string[]
+  outerLetters: string[]
+  pangrams: string[]
+  answers: string[]
   foundWords: string[]
-  score: number
 }>({
-  letters: [],
-  validWords: {},
+  centerLetter: "",
+  outerLetters: [],
+  validLetters: [],
+  pangrams: [],
+  answers: [],
   foundWords: [],
-  score: 0,
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
+  const currentGame = games[0]
+
   return (
     <GameContext
       value={{
-        letters: ["d", "e", "f", "i", "u", "h", "m"],
-        validWords: dictionary,
+        centerLetter: currentGame.centerLetter,
+        outerLetters: currentGame.outerLetters,
+        validLetters: currentGame.validLetters,
+        pangrams: currentGame.pangrams,
+        answers: currentGame.answers,
         foundWords: [],
-        score: 0,
       }}
     >
       {children}

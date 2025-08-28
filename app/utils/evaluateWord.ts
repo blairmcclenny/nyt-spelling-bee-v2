@@ -1,28 +1,41 @@
-import isPangram from "./isPangram"
-import isValidWord from "./isValidWord"
+import isPangram from "@/app/utils/isPangram"
+import isValidWord from "@/app/utils/isValidWord"
+
+// {value: <string>, points: number, isPangram: boolean}
+// (value: <string>, isError: boolean)
+
+type EvaluateWord =
+  | { status: "invalid"; message: string; points: null }
+  | { status: "valid"; message: string; points: number }
+  | { status: "pangram"; message: string; points: number }
 
 export default function evaluateWord(
   word: string,
   letters: string[],
   validWords: Record<string, boolean>,
   foundWords: string[]
-):
-  | { status: "invalid"; error: string; points: null }
-  | { status: "valid"; error: null; points: number }
-  | { status: "pangram"; error: null; points: number } {
+): EvaluateWord {
   if (!word) {
-    return { status: "invalid", error: "Empty input", points: null }
+    return { status: "invalid", message: "Empty input", points: null }
   }
 
   if (!isValidWord(word, letters, validWords, foundWords)) {
-    return { status: "invalid", error: "Not in word list", points: null }
+    return { status: "invalid", message: "Not in word list", points: null }
   }
 
   const points = word.length === 4 ? 1 : word.length
 
   if (isPangram(word, letters)) {
-    return { status: "pangram", error: null, points: points + 7 }
+    return {
+      status: "pangram",
+      message: "Pangram!",
+      points: points + 7,
+    }
   }
 
-  return { status: "valid", error: null, points }
+  return {
+    status: "valid",
+    message: points >= 7 ? "Awesome!" : points > 1 ? "Nice!" : "Good!",
+    points,
+  }
 }
