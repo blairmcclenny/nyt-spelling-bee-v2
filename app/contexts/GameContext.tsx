@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState } from "react"
 import { games } from "@/app/data/mock"
 
 const GameContext = createContext<{
@@ -10,6 +10,7 @@ const GameContext = createContext<{
   pangrams: string[]
   answers: string[]
   input: string[]
+  setInput: (input: string[]) => void
   foundWords: string[]
   message: string | null
 }>({
@@ -19,12 +20,14 @@ const GameContext = createContext<{
   pangrams: [],
   answers: [],
   input: [],
+  setInput: () => {},
   foundWords: [],
   message: null,
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const currentGame = games[0] // TODO: implement game selection logic (randomize)
+  const [input, setInput] = useState<string[]>([])
 
   return (
     <GameContext
@@ -34,7 +37,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         validLetters: currentGame.validLetters,
         pangrams: currentGame.pangrams,
         answers: currentGame.answers,
-        input: [],
+        input: input,
+        setInput: setInput,
         foundWords: [],
         message: null,
       }}

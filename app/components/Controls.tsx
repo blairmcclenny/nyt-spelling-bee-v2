@@ -5,6 +5,7 @@ import MessageBox from "@/app/components/MessageBox"
 import HiveInput from "@/app/components/HiveInput"
 import Hive from "@/app/components/Hive"
 import HiveActions from "@/app/components/HiveActions"
+import { useEffect } from "react"
 
 export default function Controls() {
   const {
@@ -14,9 +15,14 @@ export default function Controls() {
     pangrams,
     answers,
     input,
+    setInput,
     foundWords,
     message,
   } = useGame()
+
+  useEffect(() => {
+    setInput(["h", "e", "l", "l", "o"])
+  }, [setInput])
 
   const handleDelete = () => {
     // TODO: implement delete logic
