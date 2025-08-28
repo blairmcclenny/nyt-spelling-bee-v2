@@ -3,101 +3,24 @@
 import { createContext, useContext } from "react"
 import { games } from "@/app/data/mock"
 
-// {
-//   "centerLetter": "l",
-//   "outerLetters": [
-//     "v",
-//     "a",
-//     "y",
-//     "d",
-//     "i",
-//     "n"
-//   ],
-//   "validLetters": [
-//     "l",
-//     "a",
-//     "d",
-//     "i",
-//     "n",
-//     "v",
-//     "y"
-//   ],
-//   "pangrams": [
-//     "invalidly"
-//   ],
-//   "answers": [
-//     "invalidly",
-//     "allay",
-//     "ally",
-//     "anal",
-//     "anally",
-//     "annal",
-//     "anvil",
-//     "avail",
-//     "avidly",
-//     "daily",
-//     "dally",
-//     "dandily",
-//     "daylily",
-//     "dial",
-//     "diddly",
-//     "dill",
-//     "dilly",
-//     "dillydally",
-//     "idly",
-//     "idyl",
-//     "idyll",
-//     "illy",
-//     "inlaid",
-//     "inland",
-//     "inlay",
-//     "invalid",
-//     "lady",
-//     "laid",
-//     "lain",
-//     "lanai",
-//     "land",
-//     "landlady",
-//     "lava",
-//     "lily",
-//     "livid",
-//     "lividly",
-//     "nail",
-//     "naval",
-//     "vainly",
-//     "valid",
-//     "validly",
-//     "vandal",
-//     "vanilla",
-//     "vanillin",
-//     "vial",
-//     "villa",
-//     "villain",
-//     "villainy",
-//     "vinyl",
-//     "vividly"
-//   ],
-//   "input": ["k","j","h","k","j","h"],
-//   "foundWords": [
-//     "invalid"
-//   ],
-//   "message": null,
-// }
-
 const GameContext = createContext<{
   centerLetter: string
-  validLetters: string[]
   outerLetters: string[]
+  validLetters: string[]
   pangrams: string[]
   answers: string[]
+  input: string[]
   foundWords: string[]
+  message: string | null
 }>({
   centerLetter: "",
-  outerLetters: [],
   validLetters: [],
+  outerLetters: [],
   pangrams: [],
   answers: [],
+  input: [],
   foundWords: [],
+  message: null,
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
@@ -111,7 +34,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         validLetters: currentGame.validLetters,
         pangrams: currentGame.pangrams,
         answers: currentGame.answers,
+        input: [],
         foundWords: [],
+        message: null,
       }}
     >
       {children}
