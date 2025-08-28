@@ -1,28 +1,42 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { dictionary } from "@/app/data/dictionary"
+import { games } from "@/app/data/mock"
 
 const GameContext = createContext<{
-  letters: string[]
-  validWords: Record<string, boolean>
+  centerLetter: string
+  outerLetters: string[]
+  validLetters: string[]
+  pangrams: string[]
+  answers: string[]
+  input: string[]
   foundWords: string[]
-  score: number
+  message: string | null
 }>({
-  letters: [],
-  validWords: {},
+  centerLetter: "",
+  validLetters: [],
+  outerLetters: [],
+  pangrams: [],
+  answers: [],
+  input: [],
   foundWords: [],
-  score: 0,
+  message: null,
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
+  const currentGame = games[0]
+
   return (
     <GameContext
       value={{
-        letters: ["d", "e", "f", "i", "u", "h", "m"],
-        validWords: dictionary,
+        centerLetter: currentGame.centerLetter,
+        outerLetters: currentGame.outerLetters,
+        validLetters: currentGame.validLetters,
+        pangrams: currentGame.pangrams,
+        answers: currentGame.answers,
+        input: [],
         foundWords: [],
-        score: 0,
+        message: null,
       }}
     >
       {children}
