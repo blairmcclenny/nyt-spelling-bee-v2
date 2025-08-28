@@ -1,11 +1,11 @@
 "use client"
 
+import { useEffect } from "react"
 import { useGame } from "@/app/contexts/GameContext"
 import MessageBox from "@/app/components/MessageBox"
 import HiveInput from "@/app/components/HiveInput"
 import Hive from "@/app/components/Hive"
 import HiveActions from "@/app/components/HiveActions"
-import { useEffect } from "react"
 
 export default function Controls() {
   const {
