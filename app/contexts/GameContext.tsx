@@ -10,7 +10,7 @@ const GameContext = createContext<{
   pangrams: string[]
   answers: string[]
   input: string[]
-  setInput: (input: string[]) => void
+  setInput: React.Dispatch<React.SetStateAction<string[]>>
   foundWords: string[]
   message: string | null
 }>({
@@ -28,6 +28,8 @@ const GameContext = createContext<{
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [game, setGame] = useState<null | (typeof games)[0]>(null)
   const [input, setInput] = useState<string[]>([])
+  const [foundWords, setFoundWords] = useState<string[]>([])
+  const [message, setMessage] = useState<string | null>(null)
 
   useEffect(() => {
     setGame(games[Math.floor(Math.random() * games.length)])
