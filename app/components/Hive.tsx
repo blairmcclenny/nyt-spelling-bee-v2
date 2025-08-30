@@ -1,3 +1,5 @@
+import { useGame } from "@/app/contexts/GameContext"
+
 function HiveCell({ position, letter }: { position: number; letter: string }) {
   const hexCoords = [
     [0, 0],
@@ -11,6 +13,12 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
 
   const [x, y] = hexCoords[position]
 
+  const { setInput } = useGame()
+
+  const handleClick = () => {
+    setInput((prev) => [...prev, letter.toLowerCase()])
+  }
+
   return (
     <svg
       className="absolute top-[calc(100%/3)] left-[30%] w-[40%] h-[calc(100%/3)] fill-bg-tile-sb first:fill-bg-sb"
@@ -23,6 +31,7 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
         className="cursor-pointer stroke-bg-page transition-all duration-100 active:scale-[0.86] origin-center"
         points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263"
         strokeWidth={7.5}
+        onClick={handleClick}
       />
       <text
         className="fill-text font-bold text-[2.5em] xs:text-[1.875em] [text-anchor:middle] uppercase pointer-events-none"
@@ -36,11 +45,15 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
   )
 }
 
-export default function Hive({ letters }: { letters: string[] }) {
+export default function Hive() {
+  const { centerLetter, outerLetters } = useGame()
+
+  // TODO: implement letter shuffling
+
   return (
     <div className="w-[70%] my-[4vh] xs:w-[90%] mx-auto xs:my-[calc(--spacing(5)*1.25)] select-none">
       <div className="relative w-full pb-[calc((3*1.73205080757*0.2)*100%)]">
-        {letters.map((letter, i) => (
+        {[centerLetter, ...outerLetters].map((letter, i) => (
           <HiveCell key={letter} position={i} letter={letter} />
         ))}
       </div>
