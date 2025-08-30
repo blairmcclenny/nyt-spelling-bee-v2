@@ -12,7 +12,11 @@ const GameContext = createContext<{
   input: string[]
   setInput: React.Dispatch<React.SetStateAction<string[]>>
   foundWords: string[]
+  setFoundWords: React.Dispatch<React.SetStateAction<string[]>>
   message: string | null
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>
+  score: number
+  setScore: React.Dispatch<React.SetStateAction<number>>
 }>({
   centerLetter: "",
   outerLetters: [],
@@ -22,7 +26,11 @@ const GameContext = createContext<{
   input: [],
   setInput: () => {},
   foundWords: [],
+  setFoundWords: () => {},
   message: null,
+  setMessage: () => {},
+  score: 0,
+  setScore: () => {},
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
@@ -30,6 +38,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [input, setInput] = useState<string[]>([])
   const [foundWords, setFoundWords] = useState<string[]>([])
   const [message, setMessage] = useState<string | null>(null)
+  const [score, setScore] = useState<number>(0)
 
   useEffect(() => {
     setGame(games[Math.floor(Math.random() * games.length)])
@@ -48,7 +57,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         input: input,
         setInput: setInput,
         foundWords: [],
+        setFoundWords: setFoundWords,
         message: null,
+        setMessage: setMessage,
+        score: score,
+        setScore: setScore,
       }}
     >
       {children}
