@@ -1,65 +1,36 @@
 export default function waitForAllTransitions(
-  els: HTMLElement[]
+  nodes: Iterable<Element>
 ): Promise<void> {
+  const els = Array.from(nodes) as HTMLElement[]
+  if (els.length === 0) return Promise.resolve()
+  return Promise.all(els.map(waitForTransition)).then(() => {})
+}
+
+function waitForTransition(el: HTMLElement): Promise<void> {
   return new Promise((resolve) => {
-    const total = els.length
-    if (total === 0) return resolve()
+    const { transitionDuration, transitionDelay } = getComputedStyle(el)
+    const total = toMs(transitionDuration) + toMs(transitionDelay)
 
-    let remaining = total
-
-    const done = () => {
-      remaining -= 1
-      if (remaining <= 0) resolve()
+    if (total === 0) {
+      requestAnimationFrame(() => resolve())
+      return
     }
 
-    els.forEach((el) => {
-      // If the element has no (delay+duration), there will be no transitionend.
-      const totalMs = transitionTotalMs(el)
-      const onEnd = (e: TransitionEvent) => {
-        // Only count the element itself (ignore bubbled children)
-        if (e.target !== el) return
-        el.removeEventListener("transitionend", onEnd)
-        done()
-      }
+    const onEnd = (e: Event) => {
+      if (e.target !== el) return
+      el.removeEventListener("transitionend", onEnd as EventListener)
+      resolve()
+    }
 
-      el.addEventListener("transitionend", onEnd, { once: true })
-
-      if (totalMs === 0) {
-        // No transition: settle next frame
-        requestAnimationFrame(() => {
-          el.removeEventListener("transitionend", onEnd)
-          done()
-        })
-      } else {
-        // Safety fallback in case a browser misses the event
-        setTimeout(() => {
-          el.removeEventListener("transitionend", onEnd)
-          done()
-        }, totalMs + 50)
-      }
-    })
+    el.addEventListener("transitionend", onEnd as EventListener, { once: true })
   })
 }
 
-function transitionTotalMs(el: HTMLElement): number {
-  const cs = getComputedStyle(el)
-  const delays = parseTimeListToMs(cs.transitionDelay)
-  const durations = parseTimeListToMs(cs.transitionDuration)
-  // match lists by index (CSS allows multiple transitions); use the max total
-  const len = Math.max(delays.length, durations.length)
-  let max = 0
-  for (let i = 0; i < len; i++) {
-    const d = durations[i % durations.length] ?? 0
-    const dl = delays[i % delays.length] ?? 0
-    if (d + dl > max) max = d + dl
-  }
-  return max
-}
-
-function parseTimeListToMs(list: string): number[] {
+function toMs(list: string): number {
   return list
     .split(",")
     .map((t) => t.trim())
     .filter(Boolean)
     .map((t) => (t.endsWith("ms") ? parseFloat(t) : parseFloat(t) * 1000))
+    .reduce((max, n) => Math.max(max, n), 0)
 }
