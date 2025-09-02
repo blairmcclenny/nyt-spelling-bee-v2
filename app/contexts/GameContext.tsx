@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { games } from "@/app/data/mock"
 
+type ShuffleState = "idle" | "fadingOut" | "shuffling" | "fadingIn"
+
 const GameContext = createContext<{
   centerLetter: string
   outerLetters: string[]
@@ -13,6 +15,8 @@ const GameContext = createContext<{
   setInput: React.Dispatch<React.SetStateAction<string[]>>
   foundWords: string[]
   setFoundWords: React.Dispatch<React.SetStateAction<string[]>>
+  shuffleState: ShuffleState
+  setShuffleState: React.Dispatch<React.SetStateAction<ShuffleState>>
   message: string | null
   setMessage: React.Dispatch<React.SetStateAction<string | null>>
   score: number
@@ -27,6 +31,8 @@ const GameContext = createContext<{
   setInput: () => {},
   foundWords: [],
   setFoundWords: () => {},
+  shuffleState: "idle",
+  setShuffleState: () => {},
   message: null,
   setMessage: () => {},
   score: 0,
@@ -37,6 +43,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [game, setGame] = useState<null | (typeof games)[0]>(null)
   const [input, setInput] = useState<string[]>([])
   const [foundWords, setFoundWords] = useState<string[]>([])
+  const [shuffleState, setShuffleState] = useState<ShuffleState>("idle")
   const [message, setMessage] = useState<string | null>(null)
   const [score, setScore] = useState<number>(0)
 
@@ -58,6 +65,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setInput: setInput,
         foundWords: foundWords,
         setFoundWords: setFoundWords,
+        shuffleState: shuffleState,
+        setShuffleState: setShuffleState,
         message: message,
         setMessage: setMessage,
         score: score,
