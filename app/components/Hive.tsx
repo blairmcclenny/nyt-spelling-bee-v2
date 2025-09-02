@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from "react"
 import { useGame } from "@/app/contexts/GameContext"
+import waitForAllTransitions from "@/app/utils/waitForAllTransitions"
 
 function HiveCell({ position, letter }: { position: number; letter: string }) {
   const hexCoords = [
@@ -34,7 +36,12 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
         onClick={handleClick}
       />
       <text
-        className="fill-text font-bold text-[2.5em] xs:text-[1.875em] [text-anchor:middle] uppercase pointer-events-none"
+        className={[
+          "fill-text font-bold text-[2.5em] xs:text-[1.875em] [text-anchor:middle] uppercase pointer-events-none",
+          position !== 0
+            ? "hive-cell-outer-letter transition-opacity duration-300 opacity-100 group-[.fading-out]:opacity-0 group-[.fading-in]:opacity-100"
+            : "",
+        ].join(" ")}
         x="50%"
         y="50%"
         dy="0.35em"
@@ -46,14 +53,73 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
 }
 
 export default function Hive() {
-  const { centerLetter, outerLetters } = useGame()
+  const { centerLetter, outerLetters, shuffleState, setShuffleState } =
+    useGame()
+  const hiveRef = useRef<HTMLDivElement>(null)
+  const [shuffledOuterLetters, setShuffledOuterLetters] =
+    useState<string[]>(outerLetters)
 
-  // TODO: implement letter shuffling
+  const shuffleOuterLetters = () => {
+    setShuffledOuterLetters((prev) => [...prev].sort(() => Math.random() - 0.5))
+  }
+
+  useEffect(() => {
+    let cancelled = false
+    const hive = hiveRef.current
+
+    if (!hive) return
+
+    const hiveCellOuterLetters = Array.from(
+      hive.querySelectorAll<HTMLElement>(".hive-cell-outer-letter")
+    )
+
+    async function run() {
+      if (shuffleState === "fadingOut") {
+        hive?.classList.add("fading-out")
+        hive?.classList.remove("fading-in")
+
+        await waitForAllTransitions(hiveCellOuterLetters)
+
+        if (cancelled) return
+
+        setShuffleState("shuffling")
+      }
+
+      if (shuffleState === "shuffling") {
+        shuffleOuterLetters()
+        await new Promise((r) => setTimeout(r, 50))
+
+        if (cancelled) return
+
+        setShuffleState("fadingIn")
+      }
+
+      if (shuffleState === "fadingIn") {
+        hive?.classList.add("fading-in")
+        hive?.classList.remove("fading-out")
+
+        await waitForAllTransitions(hiveCellOuterLetters)
+
+        if (cancelled) return
+
+        setShuffleState("idle")
+      }
+    }
+
+    run()
+
+    return () => {
+      cancelled = true
+    }
+  }, [shuffleState, setShuffleState])
 
   return (
     <div className="w-[70%] my-[4vh] xs:w-[90%] mx-auto xs:my-[calc(--spacing(5)*1.25)] select-none">
-      <div className="relative w-full pb-[calc((3*1.73205080757*0.2)*100%)]">
-        {[centerLetter, ...outerLetters].map((letter, i) => (
+      <div
+        ref={hiveRef}
+        className="relative w-full pb-[calc((3*1.73205080757*0.2)*100%)] group"
+      >
+        {[centerLetter, ...shuffledOuterLetters].map((letter, i) => (
           <HiveCell key={letter} position={i} letter={letter} />
         ))}
       </div>
