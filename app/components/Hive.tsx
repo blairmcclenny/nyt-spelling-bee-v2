@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useGame } from "@/app/contexts/GameContext"
 import waitForAllTransitions from "@/app/utils/waitForAllTransitions"
+import nextFrame from "@/app/utils/nextFrame"
 
 function HiveCell({ position, letter }: { position: number; letter: string }) {
   const hexCoords = [
@@ -39,7 +40,7 @@ function HiveCell({ position, letter }: { position: number; letter: string }) {
         className={[
           "fill-text font-bold text-[2.5em] xs:text-[1.875em] [text-anchor:middle] uppercase pointer-events-none",
           position !== 0
-            ? "hive-cell-outer-letter transition-opacity duration-300 opacity-100 group-[.fading-out]:opacity-0 group-[.fading-in]:opacity-100"
+            ? "hive-cell-outer-letter transition-opacity duration-300 motion-reduce:transition-none opacity-100 group-[.fading-out]:opacity-0 group-[.fading-in]:opacity-100"
             : "",
         ].join(" ")}
         x="50%"
@@ -59,9 +60,9 @@ export default function Hive() {
   const [shuffledOuterLetters, setShuffledOuterLetters] =
     useState<string[]>(outerLetters)
 
-  const shuffleOuterLetters = () => {
+  const shuffleOuterLetters = useCallback(() => {
     setShuffledOuterLetters((prev) => [...prev].sort(() => Math.random() - 0.5))
-  }
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -83,18 +84,15 @@ export default function Hive() {
         if (cancelled) return
 
         setShuffleState("shuffling")
-      }
-
-      if (shuffleState === "shuffling") {
+      } else if (shuffleState === "shuffling") {
         shuffleOuterLetters()
-        await new Promise((r) => setTimeout(r, 50))
+
+        await nextFrame(2)
 
         if (cancelled) return
 
         setShuffleState("fadingIn")
-      }
-
-      if (shuffleState === "fadingIn") {
+      } else if (shuffleState === "fadingIn") {
         hive?.classList.add("fading-in")
         hive?.classList.remove("fading-out")
 
@@ -111,7 +109,7 @@ export default function Hive() {
     return () => {
       cancelled = true
     }
-  }, [shuffleState, setShuffleState])
+  }, [shuffleState, setShuffleState, shuffleOuterLetters])
 
   return (
     <div className="w-[70%] my-[4vh] xs:w-[90%] mx-auto xs:my-[calc(--spacing(5)*1.25)] select-none">
