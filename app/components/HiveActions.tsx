@@ -15,6 +15,7 @@ export default function HiveActions() {
     foundWords,
     shuffleState,
     setShuffleState,
+    setMessage,
   } = useGame()
   const keyPress = useKeyPress()
 
@@ -41,6 +42,7 @@ export default function HiveActions() {
 
     console.log({ value, points, isPangram, isError })
 
+    setMessage({ value, points, isPangram, isError })
     setInput([])
   }
 
