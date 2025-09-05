@@ -24,7 +24,7 @@ export default function useKeyPress() {
     }
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (isTypingTarget(e.target)) return
+      if (isTypingTarget(e.target) || e.ctrlKey || e.metaKey) return
 
       if (/^[a-zA-Z]$/.test(e.key)) {
         setKeyPress({ type: "letter", value: e.key })
