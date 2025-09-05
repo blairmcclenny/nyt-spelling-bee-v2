@@ -15,12 +15,15 @@ export default function useKeyPress() {
       if (!(target instanceof HTMLElement)) return false
 
       const tag = target.tagName.toLowerCase()
-
       if (tag === "input" || tag === "textarea") return true
 
       if (target.isContentEditable) return true
 
       return false
+    }
+
+    function handleKeyUp() {
+      setKeyPress(null)
     }
 
     function handleKeyDown(e: KeyboardEvent) {
@@ -40,7 +43,12 @@ export default function useKeyPress() {
     }
 
     window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
+    window.addEventListener("keyup", handleKeyUp)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+      window.removeEventListener("keyup", handleKeyUp)
+    }
   }, [])
 
   return keyPress
