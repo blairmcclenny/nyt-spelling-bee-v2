@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useGame } from "@/app/contexts/GameContext"
 import waitForAllTransitions from "@/app/utils/waitForAllTransitions"
 import nextFrame from "@/app/utils/nextFrame"
+import shuffle from "@/app/utils/shuffle"
 
 function HiveCell({ position, letter }: { position: number; letter: string }) {
   const hexCoords = [
@@ -61,7 +62,7 @@ export default function Hive() {
     useState<string[]>(outerLetters)
 
   const shuffleOuterLetters = useCallback(() => {
-    setShuffledOuterLetters((prev) => [...prev].sort(() => Math.random() - 0.5))
+    setShuffledOuterLetters((prev) => shuffle([...prev]))
   }, [])
 
   useEffect(() => {
