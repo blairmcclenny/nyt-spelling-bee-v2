@@ -18,12 +18,12 @@ export default function evaluateUserInput(
     return { value: "Too long", isError: true }
   }
 
-  if (!input.includes(centerLetter)) {
-    return { value: "Missing center letter", isError: true }
-  }
-
   if ([...input].some((letter) => !validLetters.includes(letter))) {
     return { value: "Bad letters", isError: true }
+  }
+
+  if (!input.includes(centerLetter)) {
+    return { value: "Missing center letter", isError: true }
   }
 
   if (!answers.includes(input)) {
