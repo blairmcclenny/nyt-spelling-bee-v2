@@ -111,10 +111,6 @@ export default function Progress() {
     | "Amazing" = "Solid"
 
   // TODO: animate rank change
-  // 1. fade out old rank
-  // 2. slide up old rank
-  // 3. slide in new rank letters with staggered animation
-  // 4. fade in new rank
 
   return (
     <div className="m-3 mb-0">
@@ -144,12 +140,12 @@ export default function Progress() {
               </div>
             </div>
             <div
-              className="sb-progress-marker w-[1.875em] h-[1.875em] absolute left-0 transition-transform duration-200 -translate-x-1/2"
+              className="w-[1.875em] h-[1.875em] absolute left-0 transition-transform duration-200 -translate-x-1/2"
               style={{ left: `${markerPosition}%` }}
             >
               <span
                 className={[
-                  "sb-progress-value absolute flex items-center justify-center h-full w-full text-constant bg-bg-sb text-[0.75em] font-medium tracking-[-0.03125em]",
+                  "absolute flex items-center justify-center h-full w-full text-constant bg-bg-sb text-[0.75em] font-medium tracking-[-0.03125em]",
                   markerPosition >= 100 ? "rounded-none" : "rounded-full",
                 ].join(" ")}
               >
