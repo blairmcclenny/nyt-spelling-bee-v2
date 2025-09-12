@@ -13,9 +13,11 @@ export default function HiveActions() {
     pangrams,
     answers,
     foundWords,
+    setFoundWords,
     shuffleState,
     setShuffleState,
     setMessage,
+    setScore,
   } = useGame()
   const keyPress = useKeyPress()
 
@@ -31,8 +33,9 @@ export default function HiveActions() {
   const handleSubmit = () => {
     if (!input.length) return
 
+    const word = input.join("")
     const { value, points, isPangram, isError } = evaluateUserInput(
-      input.join(""),
+      word,
       centerLetter,
       validLetters,
       pangrams,
@@ -40,7 +43,10 @@ export default function HiveActions() {
       foundWords
     )
 
-    console.log({ value, points, isPangram, isError })
+    if (!isError && points) {
+      setScore((prev) => prev + points)
+      setFoundWords((prev) => [...prev, word])
+    }
 
     setMessage({ value, points, isPangram, isError })
     setInput([])
