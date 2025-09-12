@@ -1,3 +1,8 @@
+"use client"
+
+import { useGame } from "@/app/contexts/GameContext"
+import { useEffect, useState } from "react"
+
 // $dot-size: 9px;
 // $marker-size: 1.875em;
 // $progress-transition-time: 200ms;
@@ -98,17 +103,12 @@ function ProgressDot({ isCompleted }: { isCompleted: boolean }) {
 }
 
 export default function Progress() {
-  const markerPosition = 50 // 100 // 37.5 // percentage
-  const currentValue = 14
-  const rank:
-    | "Beginner"
-    | "Good Start"
-    | "Moving Up"
-    | "Good"
-    | "Solid"
-    | "Nice"
-    | "Great"
-    | "Amazing" = "Solid"
+  const { score, rank, rankIdx, ranksUpToGenius } = useGame()
+  const [markerPosition, setMarkerPosition] = useState(0)
+
+  useEffect(() => {
+    setMarkerPosition((rankIdx / (ranksUpToGenius.length - 1)) * 100)
+  }, [rankIdx, ranksUpToGenius])
 
   // TODO: animate rank change
 
@@ -128,19 +128,13 @@ export default function Progress() {
           <div className="flex grow relative min-w-[calc(100%_-_97px)] items-center ml-3 h-[1.875em]">
             <div className="relative h-px flex items-center w-full bg-text-sb-progress">
               <div className="w-full flex justify-between">
-                <ProgressDot isCompleted={true} />
-                <ProgressDot isCompleted={true} />
-                <ProgressDot isCompleted={true} />
-                <ProgressDot isCompleted={true} />
-                <ProgressDot isCompleted={true} />
-                <ProgressDot isCompleted={false} />
-                <ProgressDot isCompleted={false} />
-                <ProgressDot isCompleted={false} />
-                <ProgressDot isCompleted={false} />
+                {ranksUpToGenius.map((rank, i) => (
+                  <ProgressDot key={rank.title} isCompleted={rankIdx >= i} />
+                ))}
               </div>
             </div>
             <div
-              className="w-[1.875em] h-[1.875em] absolute left-0 transition-transform duration-200 -translate-x-1/2"
+              className="w-[1.875em] h-[1.875em] absolute left-0 transition-[left] duration-200 -translate-x-1/2"
               style={{ left: `${markerPosition}%` }}
             >
               <span
@@ -149,7 +143,7 @@ export default function Progress() {
                   markerPosition >= 100 ? "rounded-none" : "rounded-full",
                 ].join(" ")}
               >
-                {currentValue}
+                {score}
               </span>
             </div>
           </div>

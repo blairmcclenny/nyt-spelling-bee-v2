@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { games } from "@/app/data/mock"
+import { getRanksUpToGenius } from "../utils/getRanksUpToGenius"
+import { getTotalPoints } from "../utils/getTotalPoints"
 
 type ShuffleState = "idle" | "fadingOut" | "shuffling" | "fadingIn"
 type Message = {
@@ -27,6 +29,9 @@ const GameContext = createContext<{
   setMessage: React.Dispatch<React.SetStateAction<Message | null>>
   score: number
   setScore: React.Dispatch<React.SetStateAction<number>>
+  rank: string
+  rankIdx: number
+  ranksUpToGenius: { minScore: number; title: string }[]
 }>({
   centerLetter: "",
   outerLetters: [],
@@ -43,6 +48,9 @@ const GameContext = createContext<{
   setMessage: () => {},
   score: 0,
   setScore: () => {},
+  rank: "Beginner",
+  rankIdx: 0,
+  ranksUpToGenius: [],
 })
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
@@ -52,10 +60,36 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [shuffleState, setShuffleState] = useState<ShuffleState>("idle")
   const [message, setMessage] = useState<Message | null>(null)
   const [score, setScore] = useState<number>(0)
+  const [rankIdx, setRankIdx] = useState<number>(0)
+  const [ranksUpToGenius, setRanksUpToGenius] = useState<
+    { minScore: number; title: string }[]
+  >([])
 
   useEffect(() => {
     setGame(games[Math.floor(Math.random() * games.length)])
   }, [])
+
+  useEffect(() => {
+    setRanksUpToGenius(
+      getRanksUpToGenius(
+        getTotalPoints({
+          answers: game?.answers || [],
+          pangrams: game?.pangrams || [],
+        })
+      )
+    )
+  }, [game])
+
+  useEffect(() => {
+    const newRankIdx = ranksUpToGenius.findIndex((rank, i) => {
+      return (
+        score >= rank.minScore &&
+        (i === ranksUpToGenius.length - 1 ||
+          score < ranksUpToGenius[i + 1].minScore)
+      )
+    })
+    setRankIdx(newRankIdx === -1 ? 0 : newRankIdx)
+  }, [score, ranksUpToGenius])
 
   if (!game) return null
 
@@ -77,6 +111,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setMessage: setMessage,
         score: score,
         setScore: setScore,
+        rank: ranksUpToGenius[rankIdx]?.title || "Beginner",
+        rankIdx: rankIdx,
+        ranksUpToGenius: ranksUpToGenius,
       }}
     >
       {children}
