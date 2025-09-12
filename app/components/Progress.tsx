@@ -134,7 +134,7 @@ export default function Progress() {
               </div>
             </div>
             <div
-              className="w-[1.875em] h-[1.875em] absolute left-0 transition-transform duration-200 -translate-x-1/2"
+              className="w-[1.875em] h-[1.875em] absolute left-0 transition-[left] duration-200 -translate-x-1/2"
               style={{ left: `${markerPosition}%` }}
             >
               <span
