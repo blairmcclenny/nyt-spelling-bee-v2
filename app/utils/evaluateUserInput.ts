@@ -12,7 +12,7 @@ type Result = {
     | "Awesome!"
     | "Pangram!"
   isError?: boolean
-  points?: number
+  points?: number // not null or undefined if isError is true
   isPangram?: boolean
 }
 
