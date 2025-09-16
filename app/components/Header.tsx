@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="pt-6">
+    <header className="pt-6 hidden md:block">
       <div className="flex flex-wrap items-stretch min-h-px flex-[1_1_0%] m-auto max-w-7xl p-6">
         <div className="flex-[1_1_auto] m-3">
           <h2>
