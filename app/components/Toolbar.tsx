@@ -16,7 +16,7 @@ export default function Toolbar() {
             >
               <span
                 role="presentation"
-                className="pz-toolbar-button text-lg leading-11 inline-block pt-1.5 px-[13px] pb-1 text-text hover:cursor-pointer hover:bg-bg-toolbar-selected"
+                className="pz-toolbar-button text-lg leading-11 inline-block pt-1.5 px-[13px] pb-1 text-text hover:cursor-pointer hover:bg-bg-toolbar-selected transition-colors"
               >
                 How to Play
               </span>
