@@ -6,14 +6,12 @@ export default function Toolbar() {
       <div className="flex flex-wrap items-stretch min-h-px flex-1 m-auto max-w-7xl px-3 md:px-6">
         <div className="flex flex-wrap justify-end flex-1 md:mx-3">
           <div>
-            <span className="sb-tooltip-trigger">
-              <span
-                role="presentation"
-                className="md:text-lg leading-11 inline-block md:pt-1.5 md:pb-1 px-2.5 md:px-[13px] text-text hover:cursor-pointer hover:bg-bg-toolbar-selected transition-colors"
-              >
-                How to Play
-              </span>
-            </span>
+            <button
+              type="button"
+              className="md:text-lg leading-11 inline-block md:pt-1.5 md:pb-1 px-2.5 md:px-[13px] text-text hover:cursor-pointer hover:bg-bg-toolbar-selected transition-colors"
+            >
+              How to Play
+            </button>
           </div>
         </div>
       </div>
