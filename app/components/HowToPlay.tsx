@@ -1,5 +1,8 @@
 // /* stylelint-disable custom/playbook-spacing-rules */
 
+import { X } from "lucide-react"
+import { createPortal } from "react-dom"
+
 // @import 'shared/scss-helpers/index.scss';
 // @import 'shared/scss-helpers/spacing.scss';
 
@@ -816,20 +819,33 @@
 //   }
 // }
 
-export default function HowToPlay() {
-  return (
+export default function HowToPlay({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}) {
+  return createPortal(
     <div id="portal-game-modals">
-      <div className="sb-modal-system sb-modal-open">
-        <div role="presentation" className="sb-modal-scrim">
-          <div className="sb-modal-wrapper" data-testid="sb-modal-wrapper">
+      <div
+        className="sb-modal-system sb-modal-open"
+        onClick={() => setIsOpen(false)}
+      >
+        <div
+          role="presentation"
+          className={[
+            "sb-modal-scrim fixed sm:absolute z-50 inset-0 bg-bg-scrim transition-opacity",
+            isOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0",
+          ].join(" ")}
+        >
+          <div className="sb-modal-wrapper">
             <div role="button" className="sb-modal-frame help">
               <div className="sb-modal-top">
-                <div
-                  role="button"
-                  className="sb-modal-close"
-                  data-testid="sb-modal-close"
-                >
-                  ×
+                <div role="button" className="sb-modal-close">
+                  <X size={20} />
                 </div>
               </div>
               <div className="sb-modal-content has-overflow">
@@ -917,6 +933,7 @@ export default function HowToPlay() {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
