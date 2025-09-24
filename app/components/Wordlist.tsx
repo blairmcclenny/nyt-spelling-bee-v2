@@ -6,38 +6,29 @@ export default function Wordlist() {
   const { foundWords, pangrams } = useGame()
 
   return (
-    <div className="sb-wordlist-box">
-      <div className="sb-wordlist-heading">
+    <div className="sb-wordlist-box m-3 tracking-[.005em] overflow-hidden rounded-md border border-stroke-tertiary md:flex md:flex-col">
+      <div className="sb-wordlist-heading relative h-11 md:h-12 overflow-hidden">
         <div
-          className="sb-wordlist-heading-wrap sb-touch-button"
+          className="sb-wordlist-heading-wrap sb-touch-button md:pointer-events-none"
           data-testid="touch-button"
         >
-          <div className="sb-wordlist-summary">You have found 7 words</div>
-          {/* <div className="sb-recent-words-wrap">
+          <div
+            className={[
+              "sb-wordlist-summary relative px-5 flex items-center -top-11 h-11 opacity-0 whitespace-nowrap text-ellipsis overflow-hidden",
+              "md:h-12 md:top-0 md:opacity-100 md:px-6",
+            ].join(" ")}
+          >
+            You have found {foundWords.length} words
+          </div>
+          <div className="sb-recent-words-wrap">
             <ul className="sb-recent-words sb-has-words">
-              <li>
-                <span className="sb-anagram">teat</span>
-              </li>
-              <li>
-                <span className="sb-anagram">beat</span>
-              </li>
-              <li>
-                <span className="sb-anagram">bite</span>
-              </li>
-              <li>
-                <span className="sb-anagram">tack</span>
-              </li>
-              <li>
-                <span className="sb-anagram">tick</span>
-              </li>
-              <li>
-                <span className="sb-anagram">bait</span>
-              </li>
-              <li>
-                <span className="sb-anagram">take</span>
-              </li>
+              {foundWords.map((word) => (
+                <li key={word}>
+                  <span className="sb-anagram">{word}</span>
+                </li>
+              ))}
             </ul>
-          </div> */}
+          </div>
           <div className="sb-toggle-expand">
             <span className="sb-toggle-icon"></span>
           </div>
