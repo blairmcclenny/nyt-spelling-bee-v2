@@ -34,11 +34,11 @@ export default function Wordlist() {
           </div>
         </div>
       </div>
-      <div className="sb-wordlist-drawer">
-        <div className="sb-wordlist-window">
-          <div className="sb-wordlist-pag">
+      <div className="sb-wordlist-drawer overflow-hidden max-h-0 transition-[max-height] duration-200 ease-in-out md:max-h-none md:flex md:flex-col">
+        <div className="sb-wordlist-window relative overflow-hidden h-[calc(1vh*64)] md:max-h-none">
+          <div className="sb-wordlist-pag relative flex h-full overflow-x-auto overflow-y-hidden z-0 snap-mandatory scrollbar-hide scroll-smooth overscroll-contain ml-5 md:ml-6">
             <div className="sb-wordlist-scroll-anchor" style={{ left: "0%" }} />
-            <ul className="sb-wordlist-items-pag">
+            <ul className="sb-wordlist-items-pag flex flex-col flex-wrap items-start h-[calc(100%-38px)] w-full pt-5 pb-6 md:pt-0">
               {foundWords.sort().map((word) => (
                 <li
                   key={word}
