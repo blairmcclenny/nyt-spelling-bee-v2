@@ -31,7 +31,7 @@ Progress through ranks as you score points: Beginner → Good Start → Moving U
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/nyt-spelling-bee-v2.git
+git clone https://github.com/blairmcclenny/nyt-spelling-bee-v2.git
 cd nyt-spelling-bee-v2
 
 # Install dependencies
@@ -122,6 +122,6 @@ app/
 - 💬 Feedback messages for valid/invalid words
 - 📱 Responsive design for mobile and desktop
 
-## 📄 License
+## 📄 Disclaimer
 
 This project is for educational purposes. The NYT Spelling Bee is a trademark of The New York Times Company.
